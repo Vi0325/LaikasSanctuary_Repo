@@ -1,28 +1,10 @@
 fileFormatVersion: 2
-guid: 0d2906507f8efa24394bb41b0a0fd8fd
+guid: 610a6402e49780045b97bf4c198e9de0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4331157297908003904
-    second: Oppy_0
-  - first:
-      213: -7826277747290267873
-    second: Oppy_1
-  - first:
-      213: -5980778596511333173
-    second: Oppy_2
-  - first:
-      213: 5766465230809877988
-    second: Oppy_3
-  - first:
-      213: -4567638050474518137
-    second: Oppy_4
-  - first:
-      213: -3444923721650240619
-    second: Oppy_5
-  - first:
-      213: -1411161315942669694
-    second: Oppy_6
+      213: 8212712898034683147
+    second: Lana_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -64,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -118,45 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Oppy_5
+      name: Lana_0
       rect:
         serializedVersion: 2
-        x: 545
-        y: 381
-        width: 263
-        height: 260
+        x: 0
+        y: 0
+        width: 121
+        height: 54
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 59388bc802c2130d0800000000000000
-      internalID: -3444923721650240619
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Oppy_6
-      rect:
-        serializedVersion: 2
-        x: 200
-        y: 381
-        width: 263
-        height: 241
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 282e672824c8a6ce0800000000000000
-      internalID: -1411161315942669694
+      spriteID: b0d40a13eda69f170800000000000000
+      internalID: 8212712898034683147
       vertices: []
       indices: 
       edges: []
@@ -175,13 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Oppy_0: 4331157297908003904
-      Oppy_1: -7826277747290267873
-      Oppy_2: -5980778596511333173
-      Oppy_3: 5766465230809877988
-      Oppy_4: -4567638050474518137
-      Oppy_5: -3444923721650240619
-      Oppy_6: -1411161315942669694
+      Lana_0: 8212712898034683147
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
