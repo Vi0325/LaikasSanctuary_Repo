@@ -284,7 +284,14 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Oppy_0: 4331157297908003904
+      Oppy_1: -7826277747290267873
+      Oppy_2: -5980778596511333173
+      Oppy_3: 5766465230809877988
+      Oppy_4: -4567638050474518137
+      Oppy_5: -3444923721650240619
+      Oppy_6: -1411161315942669694
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
