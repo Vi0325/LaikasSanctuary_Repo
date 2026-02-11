@@ -3310,8 +3310,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a2d353a37755c844c8681a40967c02da, type: 2}
+  m_sharedMaterial: {fileID: -2223081955591081458, guid: a2d353a37755c844c8681a40967c02da, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5645,8 +5645,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -450, y: -131}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -450, y: -131.70477}
+  m_SizeDelta: {x: 200, y: 51.8292}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1177557457
 MonoBehaviour:
@@ -5670,8 +5670,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Vidas = 3
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a2d353a37755c844c8681a40967c02da, type: 2}
+  m_sharedMaterial: {fileID: -2223081955591081458, guid: a2d353a37755c844c8681a40967c02da, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5733,7 +5733,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -93.29061, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6916,6 +6916,7 @@ MonoBehaviour:
   dialoguePanel: {fileID: 1660386858}
   dialogueText: {fileID: 830331085}
   dialogue:
+  - 
   - Greetings, brave little cosmonaut!
   - They sent you back to the stars...
   - ...
@@ -6923,6 +6924,7 @@ MonoBehaviour:
   - The cycle ends here,
   - Ouroboros will take you to your new home.
   - Help her move and avoid the asteroids with WASD!
+  - And pick up as many orange stars as you can!
   contButton: {fileID: 1142670390}
   wordSpeed: 0.06
   playerIsClose: 0
@@ -7256,8 +7258,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'LAIKA '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a2d353a37755c844c8681a40967c02da, type: 2}
+  m_sharedMaterial: {fileID: -2223081955591081458, guid: a2d353a37755c844c8681a40967c02da, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7974,7 +7976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1660386859
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8095,8 +8097,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Estrellas:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a2d353a37755c844c8681a40967c02da, type: 2}
+  m_sharedMaterial: {fileID: -2223081955591081458, guid: a2d353a37755c844c8681a40967c02da, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8158,7 +8160,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -185.7491, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
