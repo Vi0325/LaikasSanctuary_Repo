@@ -4,7 +4,9 @@ using UnityEngine;
 public class VidasAsterioides : MonoBehaviour
 {
     [Header("UI")]
+    public int estrellas = 0;
     public int Vidas = 3;
+    public TextMeshProUGUI textoestrellas;
     public TextMeshProUGUI textovidas;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,6 +22,12 @@ public class VidasAsterioides : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("PickUp"))
+            {
+                estrellas++;
+                textoestrellas.text = "Estrellas: " + estrellas;
+                Destroy(other.gameObject);
+        }
         if (other.CompareTag("Asteroide"))
         {
             Vidas--;
