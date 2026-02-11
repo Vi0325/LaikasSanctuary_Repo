@@ -1,26 +1,25 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class PrologueManager : MonoBehaviour
 {
-    // Referencias en Inspector
     [Header("Video")]
     public VideoPlayer videoPlayer;
     public VideoClip prologueClip;
     
     [Header("UI")]
     public RawImage videoDisplay;
-    public Text subtitleText;
-    public GameObject skipPrompt;
+    public Button skipButton;      // ‚Üê Bot√≥n de UI, no GameObject
     public Image fadePanel;
     
-    [Header("ConfiguraciÛn")]
+    [Header("Configuraci√≥n")]
     public string nextScene = "Level1";
     public float fadeDuration = 1f;
+    public float skipButtonDelay = 3f; // Segundos hasta que aparezca el bot√≥n
     
-    // Estados
     private enum PrologueState { Playing, Skipping, Finished }
     private PrologueState currentState;
     
@@ -33,6 +32,9 @@ public class PrologueManager : MonoBehaviour
     
     void InitializeVideo()
     {
+        if (videoPlayer == null)
+            videoPlayer = GetComponent<VideoPlayer>();
+            
         videoPlayer.clip = prologueClip;
         videoPlayer.loopPointReached += OnVideoEnd;
         videoPlayer.targetTexture = new RenderTexture(1920, 1080, 24);
@@ -41,11 +43,20 @@ public class PrologueManager : MonoBehaviour
     
     void SetupUI()
     {
-        skipPrompt.SetActive(false);
-        subtitleText.text = "";
-        fadePanel.color = Color.black;
+        // Fade Panel
+        if (fadePanel != null)
+        {
+            fadePanel.gameObject.SetActive(false);
+            fadePanel.color = Color.black;
+        }
         
-        // Fade in
+        // Bot√≥n Skip - empieza OCULTO
+        if (skipButton != null)
+        {
+            skipButton.gameObject.SetActive(false);
+            skipButton.onClick.AddListener(SkipPrologue); // Conectar el bot√≥n
+        }
+        
         StartCoroutine(FadeFromBlack());
     }
     
@@ -54,33 +65,19 @@ public class PrologueManager : MonoBehaviour
         currentState = PrologueState.Playing;
         videoPlayer.Play();
         
-        // Mostrar opciÛn de skip despuÈs de 5 segundos
-        Invoke("ShowSkipOption", 5f);
+        // Mostrar bot√≥n SKIP despu√©s de X segundos
+        Invoke(nameof(ShowSkipButton), skipButtonDelay);
     }
     
-    void Update()
+    void ShowSkipButton()
     {
-        if (currentState == PrologueState.Playing)
+        if (skipButton != null && currentState == PrologueState.Playing)
         {
-            HandleInput();
-            UpdateSubtitles(); // LÛgica de subtÌtulos aquÌ
+            skipButton.gameObject.SetActive(true);
         }
     }
     
-    void HandleInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-        {
-            SkipPrologue();
-        }
-    }
-    
-    void ShowSkipOption()
-    {
-        skipPrompt.SetActive(true);
-    }
-    
-    void SkipPrologue()
+    public void SkipPrologue() // ‚Üê P√∫blico para el bot√≥n
     {
         if (currentState == PrologueState.Playing)
         {
@@ -98,51 +95,43 @@ public class PrologueManager : MonoBehaviour
         }
     }
     
-    System.Collections.IEnumerator TransitionToGame()
+    IEnumerator TransitionToGame()
     {
-        // Fade out
         yield return StartCoroutine(FadeToBlack());
-        
-        // Cargar siguiente escena
+        yield return new WaitForSeconds(0.2f);
         SceneManager.LoadScene(nextScene);
     }
     
-    System.Collections.IEnumerator FadeFromBlack()
+    IEnumerator FadeFromBlack()
     {
-        float timer = 0;
-        Color startColor = Color.black;
-        Color endColor = new Color(0, 0, 0, 0);
+        fadePanel.gameObject.SetActive(true);
+        fadePanel.color = Color.black;
         
+        float timer = 0;
         while (timer < fadeDuration)
         {
-            fadePanel.color = Color.Lerp(startColor, endColor, timer / fadeDuration);
+            fadePanel.color = Color.Lerp(Color.black, Color.clear, timer / fadeDuration);
             timer += Time.deltaTime;
             yield return null;
         }
         
-        fadePanel.color = endColor;
+        fadePanel.color = Color.clear;
+        fadePanel.gameObject.SetActive(false);
     }
     
-    System.Collections.IEnumerator FadeToBlack()
+    IEnumerator FadeToBlack()
     {
-        float timer = 0;
-        Color startColor = new Color(0, 0, 0, 0);
-        Color endColor = Color.black;
+        fadePanel.gameObject.SetActive(true);
+        fadePanel.color = Color.clear;
         
+        float timer = 0;
         while (timer < fadeDuration)
         {
-            fadePanel.color = Color.Lerp(startColor, endColor, timer / fadeDuration);
+            fadePanel.color = Color.Lerp(Color.clear, Color.black, timer / fadeDuration);
             timer += Time.deltaTime;
             yield return null;
         }
         
-        fadePanel.color = endColor;
-    }
-    
-    // MÈtodo para subtÌtulos (simplificado)
-    void UpdateSubtitles()
-    {
-        // Tu lÛgica de subtÌtulos aquÌ
-        // Puedes usar videoPlayer.time para sincronizar
+        fadePanel.color = Color.black;
     }
 }
