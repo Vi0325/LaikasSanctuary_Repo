@@ -4,72 +4,72 @@ public class PlayerController : MonoBehaviour
 {
     private Animator anim;
     private float idleTimer = 0f;
-    private bool yaTieneAnimacionPausa = false;  // Controla que solo UNA vez por parada
+    private bool yaTieneAnimacionPausa = false;
 
     [Header("Tiempo para activar pausa")]
-    public float tiempoParaPausa = 5f;  // Segundos quieto hasta que sale dormir/lamer
+    public float tiempoParaPausa = 5f;
+
+    [Header("Referencias a GameObjects")]
+    public GameObject rigCat;      // GameObject con rig y Animator
+    public GameObject sleepSprite; // GameObject con sprite durmiendo
+    public GameObject lickSprite;  // GameObject con sprite lamiendo
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        anim = rigCat.GetComponent<Animator>();
     }
 
     void Update()
     {
-        // MOVIMIENTO CON WASD
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         Vector2 movimiento = new Vector2(moveX, moveY).normalized;
 
-        // APLICAR MOVIMIENTO
+        // Movimiento
         transform.Translate(movimiento * 3f * Time.deltaTime);
 
-        // ---------------------------------------- //
-        // CONTROL DE ANIMACIONES
-        // ---------------------------------------- //
+        // Voltear gato según dirección
+        if (movimiento.x > 0.01f)
+            rigCat.transform.localScale = new Vector3(1, 1, 1);
+        else if (movimiento.x < -0.01f)
+            rigCat.transform.localScale = new Vector3(-1, 1, 1);
 
-        if (movimiento != Vector2.zero)
+        // Control de animaciones y estados
+        if (movimiento.sqrMagnitude > 0.01f)
         {
-            // ✅ SE ESTÁ MOVIENDO
+            rigCat.SetActive(true);
+            sleepSprite.SetActive(false);
+            lickSprite.SetActive(false);
+
             anim.SetBool("isWalking", true);
             anim.SetBool("isSleeping", false);
             anim.SetBool("isLicking", false);
-            
-            // Resetea todo porque se movió
+
             idleTimer = 0f;
             yaTieneAnimacionPausa = false;
         }
         else
         {
-            // ❌ ESTÁ QUIETO
             anim.SetBool("isWalking", false);
-            
-            // Si ya tiene una animación de pausa, no hace nada más
-            if (yaTieneAnimacionPausa)
-                return;
-            
-            // Aumenta el tiempo quieto
+
             idleTimer += Time.deltaTime;
 
-            // ¿Lleva suficiente tiempo quieto Y no tiene animación de pausa?
             if (idleTimer >= tiempoParaPausa && !yaTieneAnimacionPausa)
             {
-                // 🎲 ELIGE ALEATORIAMENTE: 50% Sleeping, 50% Licking
+                yaTieneAnimacionPausa = true;
+
+                rigCat.SetActive(false);
+
                 if (Random.value > 0.5f)
                 {
-                    anim.SetBool("isSleeping", true);
-                    anim.SetBool("isLicking", false);
+                    sleepSprite.SetActive(true);
+                    lickSprite.SetActive(false);
                 }
                 else
                 {
-                    anim.SetBool("isLicking", true);
-                    anim.SetBool("isSleeping", false);
+                    lickSprite.SetActive(true);
+                    sleepSprite.SetActive(false);
                 }
-
-                // Marca que YA tiene animación de pausa
-                yaTieneAnimacionPausa = true;
-                
-                // 🛑 NO reseteamos el timer, no necesitamos más
             }
         }
     }
