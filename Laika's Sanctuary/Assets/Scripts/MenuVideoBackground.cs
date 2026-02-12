@@ -1,16 +1,16 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
 public class MenuVideoBackground : MonoBehaviour
 {
-    [Header("Configuración de Video")]
-    public VideoClip videoClip;      // Arrastra tu video aquí
+    [Header("ConfiguraciÃ³n de Video")]
+    public VideoClip videoClip;
     public bool playOnStart = true;
     public bool loopVideo = true;
     
-    [Header("Configuración UI")]
-    public RawImage rawImage;        // Arrastra tu Raw Image aquí
+    [Header("ConfiguraciÃ³n UI")]
+    public RawImage rawImage;
     public Vector2Int resolution = new Vector2Int(1920, 1080);
     
     private VideoPlayer videoPlayer;
@@ -23,7 +23,6 @@ public class MenuVideoBackground : MonoBehaviour
 
     void SetupVideoPlayer()
     {
-        // Crear VideoPlayer si no existe
         videoPlayer = gameObject.GetComponent<VideoPlayer>();
         if (videoPlayer == null)
             videoPlayer = gameObject.AddComponent<VideoPlayer>();
@@ -34,13 +33,14 @@ public class MenuVideoBackground : MonoBehaviour
         videoPlayer.playOnAwake = playOnStart;
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
-        videoPlayer.skipOnDrop = true; // Mejor rendimiento
         
-        // Crear RenderTexture
+        // ðŸŽ¯ CORRECCIÃ“N: Respetar FPS del video
+        videoPlayer.skipOnDrop = false;     // âœ… NO saltar frames
+        videoPlayer.playbackSpeed = 1.0f;   // âœ… Velocidad normal
+        
         renderTexture = new RenderTexture(resolution.x, resolution.y, 16);
         renderTexture.Create();
         
-        // Asignar al VideoPlayer y RawImage
         videoPlayer.targetTexture = renderTexture;
         
         if (rawImage != null)
@@ -49,7 +49,6 @@ public class MenuVideoBackground : MonoBehaviour
             rawImage.color = Color.white;
         }
         
-        // Evento cuando el video está preparado
         videoPlayer.prepareCompleted += OnVideoPrepared;
         
         if (playOnStart)
@@ -59,12 +58,11 @@ public class MenuVideoBackground : MonoBehaviour
     void OnVideoPrepared(VideoPlayer source)
     {
         videoPlayer.Play();
-        Debug.Log($"Video iniciado en: {gameObject.scene.name}");
+        Debug.Log($"Video iniciado en: {gameObject.scene.name} - FPS: {videoPlayer.frameRate}");
     }
 
     void OnDestroy()
     {
-        // Limpiar recursos
         if (renderTexture != null)
             renderTexture.Release();
         
@@ -72,7 +70,6 @@ public class MenuVideoBackground : MonoBehaviour
             videoPlayer.prepareCompleted -= OnVideoPrepared;
     }
 
-    // Método público para cambiar video
     public void ChangeVideo(VideoClip newClip)
     {
         videoPlayer.clip = newClip;
