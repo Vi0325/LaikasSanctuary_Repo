@@ -8,11 +8,11 @@ public class SceneManagement : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.StartGame("Level1");
+            GameManager.Instance.StartGame("PrologueScene");
         }
         else
         {
-            StartCoroutine(StartGameWithMusic("Level1"));
+            StartCoroutine(StartGameWithMusic("PrologueScene"));
         }
     }
 
