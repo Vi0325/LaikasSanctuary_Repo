@@ -12,13 +12,14 @@ public class PrologueManager : MonoBehaviour
     
     [Header("UI")]
     public RawImage videoDisplay;
-    public Button skipButton;      // ← Botón de UI, no GameObject
-    public Image fadePanel;
+    public Button skipButton;
+    public Image fadePanel; // Este hará TODAS las transiciones
     
     [Header("Configuración")]
     public string nextScene = "Level1";
     public float fadeDuration = 1f;
-    public float skipButtonDelay = 3f; // Segundos hasta que aparezca el botón
+    public float skipButtonDelay = 3f;
+    public float startDelay = 1.5f;
     
     private enum PrologueState { Playing, Skipping, Finished }
     private PrologueState currentState;
@@ -27,7 +28,16 @@ public class PrologueManager : MonoBehaviour
     {
         InitializeVideo();
         SetupUI();
-        StartPrologue();
+        
+        videoPlayer.time = 0;
+        videoPlayer.frame = 0;
+        videoPlayer.Prepare();
+        
+        // Empezar con FADE IN desde negro
+        StartCoroutine(FadeFromBlack());
+        
+        // Esperar y empezar video
+        Invoke(nameof(StartPrologue), startDelay);
     }
     
     void InitializeVideo()
@@ -39,33 +49,51 @@ public class PrologueManager : MonoBehaviour
         videoPlayer.loopPointReached += OnVideoEnd;
         videoPlayer.targetTexture = new RenderTexture(1920, 1080, 24);
         videoDisplay.texture = videoPlayer.targetTexture;
+        videoPlayer.playOnAwake = false;
+        videoPlayer.Pause();
+        
+        // RawImage visible desde el principio
+        videoDisplay.color = Color.white;
     }
     
     void SetupUI()
     {
-        // Fade Panel
-        if (fadePanel != null)
-        {
-            fadePanel.gameObject.SetActive(false);
-            fadePanel.color = Color.black;
-        }
-        
-        // Botón Skip - empieza OCULTO
         if (skipButton != null)
         {
             skipButton.gameObject.SetActive(false);
-            skipButton.onClick.AddListener(SkipPrologue); // Conectar el botón
+            skipButton.onClick.AddListener(SkipPrologue);
         }
         
-        StartCoroutine(FadeFromBlack());
+        // FADE PANEL empieza NEGRO y ACTIVO
+        if (fadePanel != null)
+        {
+            fadePanel.gameObject.SetActive(true);
+            fadePanel.color = Color.black;
+            fadePanel.raycastTarget = false;
+        }
+    }
+    
+    IEnumerator FadeFromBlack()
+    {
+        float timer = 0;
+        while (timer < fadeDuration)
+        {
+            fadePanel.color = Color.Lerp(Color.black, Color.clear, timer / fadeDuration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        
+        fadePanel.color = Color.clear;
     }
     
     void StartPrologue()
     {
         currentState = PrologueState.Playing;
+        
+        videoPlayer.time = 0;
+        videoPlayer.frame = 0;
         videoPlayer.Play();
         
-        // Mostrar botón SKIP después de X segundos
         Invoke(nameof(ShowSkipButton), skipButtonDelay);
     }
     
@@ -77,7 +105,7 @@ public class PrologueManager : MonoBehaviour
         }
     }
     
-    public void SkipPrologue() // ← Público para el botón
+    public void SkipPrologue()
     {
         if (currentState == PrologueState.Playing)
         {
@@ -99,30 +127,21 @@ public class PrologueManager : MonoBehaviour
     {
         yield return StartCoroutine(FadeToBlack());
         yield return new WaitForSeconds(0.2f);
-        SceneManager.LoadScene(nextScene);
-    }
-    
-    IEnumerator FadeFromBlack()
-    {
-        fadePanel.gameObject.SetActive(true);
-        fadePanel.color = Color.black;
         
-        float timer = 0;
-        while (timer < fadeDuration)
+        if (GameManager.Instance != null)
         {
-            fadePanel.color = Color.Lerp(Color.black, Color.clear, timer / fadeDuration);
-            timer += Time.deltaTime;
-            yield return null;
+            GameManager.Instance.StartGame(nextScene);
         }
-        
-        fadePanel.color = Color.clear;
-        fadePanel.gameObject.SetActive(false);
+        else
+        {
+            SceneManager.LoadScene(nextScene);
+        }
     }
     
     IEnumerator FadeToBlack()
     {
-        fadePanel.gameObject.SetActive(true);
         fadePanel.color = Color.clear;
+        fadePanel.gameObject.SetActive(true);
         
         float timer = 0;
         while (timer < fadeDuration)
