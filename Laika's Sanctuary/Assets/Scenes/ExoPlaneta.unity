@@ -451,6 +451,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2388eef55d3e4cb4a991e916b78dbee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camara: {fileID: 1775933177}
+  planeta: {fileID: 533729492}
+  velocidadZoom: 1
+  zoomFinal: 3.5
+  esperaInicial: 1
 --- !u!4 &772955639
 Transform:
   m_ObjectHideFlags: 0
