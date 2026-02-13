@@ -6,11 +6,26 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 942188b0927ae6845a4cef0f07c3aebb
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/Level1 Asteroids 1.unity
-    guid: 6f47e9ab88779f64e90dfcb1b3c4c92f
+    path: Assets/Scenes/PrologueScene.unity
+    guid: 472d8588c1beba04eb0a455008d96cea
+  - enabled: 1
+    path: Assets/Scenes/Level1 Asteroids.unity
+    guid: dc2c05b0419905a44bca2c3a3fa9b945
+  - enabled: 1
+    path: Assets/Scenes/ExoPlaneta.unity
+    guid: f19c1de0b616f1a4ca4d15054d2950a0
+  - enabled: 1
+    path: Assets/Scenes/RestArea.unity
+    guid: 7fa3d6350a89975418a35851bf716d94
+  - enabled: 1
+    path: Assets/Scenes/EndMenu.unity
+    guid: 5e2f0196d3cffe947860f046ac32a349
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
