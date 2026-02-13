@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using System.Collections;
 
 public class MenuVideoBackground : MonoBehaviour
 {
@@ -13,12 +14,25 @@ public class MenuVideoBackground : MonoBehaviour
     public RawImage rawImage;
     public Vector2Int resolution = new Vector2Int(1920, 1080);
     
+    [Header("Transición de Entrada")]
+    public Image pantallaNegra;      // Arrastra el Panel negro aquí
+    public float duracionFadeIn = 1.5f;  // Duración de la entrada suave
+    
     private VideoPlayer videoPlayer;
     private RenderTexture renderTexture;
 
     void Awake()
     {
         SetupVideoPlayer();
+    }
+
+    void Start()
+    {
+        // 🎬 EMPEZAR CON FADE IN
+        if (pantallaNegra != null)
+        {
+            StartCoroutine(FadeIn());
+        }
     }
 
     void SetupVideoPlayer()
@@ -34,9 +48,9 @@ public class MenuVideoBackground : MonoBehaviour
         videoPlayer.renderMode = VideoRenderMode.RenderTexture;
         videoPlayer.audioOutputMode = VideoAudioOutputMode.None;
         
-        // 🎯 CORRECCIÓN: Respetar FPS del video
-        videoPlayer.skipOnDrop = false;     // ✅ NO saltar frames
-        videoPlayer.playbackSpeed = 1.0f;   // ✅ Velocidad normal
+        // 🎯 Respetar FPS del video
+        videoPlayer.skipOnDrop = false;
+        videoPlayer.playbackSpeed = 1.0f;
         
         renderTexture = new RenderTexture(resolution.x, resolution.y, 16);
         renderTexture.Create();
@@ -59,6 +73,36 @@ public class MenuVideoBackground : MonoBehaviour
     {
         videoPlayer.Play();
         Debug.Log($"Video iniciado en: {gameObject.scene.name} - FPS: {videoPlayer.frameRate}");
+    }
+
+    // 🎬 FADE IN SUAVE
+    IEnumerator FadeIn()
+    {
+        // Asegurar que empieza en NEGRO TOTAL
+        Color colorNegro = pantallaNegra.color;
+        colorNegro.a = 1f;
+        pantallaNegra.color = colorNegro;
+        
+        // Esperar 0.2 segundos para asegurar que el video ya se ve
+        yield return new WaitForSeconds(0.2f);
+        
+        // Fade In gradual
+        float tiempo = 0;
+        Color color = pantallaNegra.color;
+        
+        while (tiempo < duracionFadeIn)
+        {
+            tiempo += Time.deltaTime;
+            color.a = Mathf.Lerp(1, 0, tiempo / duracionFadeIn);
+            pantallaNegra.color = color;
+            yield return null;
+        }
+        
+        // Asegurar que queda transparente
+        color.a = 0;
+        pantallaNegra.color = color;
+        
+        Debug.Log("🎬 Fade In completado");
     }
 
     void OnDestroy()
