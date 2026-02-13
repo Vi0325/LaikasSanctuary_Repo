@@ -13,8 +13,8 @@ public class PrologueManager : MonoBehaviour
     [Header("UI")]
     public RawImage videoDisplay;
     public Button skipButton;
-    public Image fadePanel; // Este hará TODAS las transiciones
-    
+    public Image fadePanel; 
+
     [Header("Configuración")]
     public string nextScene = "Level1";
     public float fadeDuration = 1f;
